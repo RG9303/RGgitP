@@ -1,0 +1,90 @@
+---
+title: "Introduction to `RGgitP` Package"
+author: RG9303
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(RGgitP)
+library(knitr)
+```
+
+## I. Introduction
+
+This R package is the coursework from week 4 of Coursera: Building R Package. The package will utilize data from the US National Highway Traffic Safety Administration's Fatality Analysis Reporting System, and it is a nationwide census of the American public yearly data about motor vehicle traffic crashes. You can perform data and make graphic analysis. If you need more information you can visit https://crashstats.nhtsa.dot.gov/#/DocumentTypeList/23.
+
+## II. Load data
+
+1. If you want to create a FARS csv extension filename for the given year you can use `make_filename()`. If you need more information, type `?make_filename` in the R console.
+
+```{r}
+
+filename_2013 = make_filename(year = 2013)
+print(filename_2013)
+
+```
+
+
+2. If you read the data with a given data you need to use `fars_read()`. If the data exist, it will return the dataframe; if the data does not exist, it will return ERROR. You find more information with `?fars_read` in the R console.
+
+```{r}
+
+fars_data = fars_read(filename = filename_2013)
+head(fars_data)
+names(fars_data)
+
+```
+
+
+## III. Read data with some years
+
+You can read FARS data with some years using `fars_read_year()`. It function combines `make_filename()` and `fars_read()` to return a dataframe separate by the given year.  If the data corresponds to the given year does not exist, a WARNING will return. You find more information with `?fars_read_year` in the R console.
+
+```{r}
+
+fars_read_years(years = c(2013, 2014))
+
+```
+
+
+
+## III. Summary table 
+
+If you need to create a summary table of data per month for the some given years with this dataframes, you can use `fars_summarize_years()`. If the data corresponds to the given year does not exist, an ERROR will return. If you need more details, type `?fars_summarize_years` in the R console.
+
+```{r}
+
+knitr::kable(fars_summarize_years(years = c(2013:2015))) 
+
+```
+
+
+
+### IV. Mapping data
+
+You can display the data for a given state using state code and a given year. For more information regarding to state code, type `?fars_map_state` in the R console.
+
+```{r}
+
+fars_map_state(state.num = 06, year = 2013)
+fars_map_state(state.num = 26, year = 2013)
+
+```
+
+
+
+
+
+
